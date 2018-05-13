@@ -1,6 +1,6 @@
 #include <RotationEncoder.h>
 
-RotationEncoder encoder(A5, A6, A7);
+RotationEncoder encoder(A1, A2, A3);
 
 const int ledPin0 = 12;
 const int ledPin1 = 11;
@@ -27,20 +27,22 @@ int lastRevs = -1;
 
 void loop() {
   encoder.update();
-  //encoder.debugPrint();
+  encoder.debugPrint();
   
   int currentRevs = encoder.getRevolutions();
   if (lastRevs != currentRevs){
-    Serial.println(currentRevs);
+    //Serial.println(currentRevs);
     lastRevs = currentRevs;
     tone(buzzerPin, 500 * pow(1.5, currentRevs-2), 100);
   }
-
-  if (!digitalRead(pushbuttonPin)){
+  
+  if (false) { //((!digitalRead(pushbuttonPin)){
     encoder._tickCount = 0;
   }
 
   digitalWrite(ledPin0, encoder._notchSensors[0].detectsNotch());
   digitalWrite(ledPin1, encoder._notchSensors[1].detectsNotch());
   digitalWrite(ledPin2, encoder._notchSensors[2].detectsNotch());
+
+  delay(1);
 }

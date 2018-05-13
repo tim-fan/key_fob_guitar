@@ -97,7 +97,7 @@ void RotationEncoder::update(void){
     stateDiff = (stateDiff == 2) ? -1 : stateDiff;
 
     if (stateDiff != 0){
-        Serial.println("state diff: " + String(stateDiff));
+        //Serial.println("state diff: " + String(stateDiff));
     } 
     _tickCount -= stateDiff;
     
@@ -114,9 +114,10 @@ int RotationEncoder::getRevolutions(void){
 }
 
 void RotationEncoder::debugPrint(void){
-    Serial.print(String(_tickCount));
+    //Serial.print(String(_tickCount));
     for (int i =0; i < 3; i++){
-        Serial.print("\t" + String(i) + ": " + String(_notchSensors[i].detectsNotch()) + " " + String(_notchSensors[i].update()));
+        //Serial.print("\t" + String(i) + ": " + String(_notchSensors[i].detectsNotch()) + " " + String(_notchSensors[i].update()));
+        Serial.print(String(_notchSensors[i].update()) + ",");
     }
     Serial.println();
 }
