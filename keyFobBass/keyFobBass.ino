@@ -12,15 +12,18 @@ volatile float pluckSensorVals[pluckSensorBufferSize];
 volatile int pluckSensorIndex = pluckSensorBufferSize;
 const float pluckSensorLoudnessThreshold = 50;
 unsigned long lastPluckTime = 0;
-const int pluckDebounceTime = 50; //milliseconds
+const int pluckDebounceTime = 100; //milliseconds
 bool lastPluckState = false; //for rising edge detection
 
 
 Encoder posEncoder(5, 6);
 int encoderCorrection = 0; //used to keep encoder values positive
 
-int numNotes = 7;
-int notes[] = {24, 26, 28, 29, 31, 33, 35}; //midi codes for c major scale
+//int numNotes = 7;
+//int notes[] = {24, 26, 28, 29, 31, 33, 35}; //midi codes for c major scale
+int numNotes = 39;
+int noteIndex = 0;
+int notes[] = {7,7,10,7,5,3,2,7,7,10,7,5,3,5,3,2,7,7,10,7,5,3,2,-2,-2,-2,-2,-2,-2,-2,-2,0,0,0,0,0,0,0,0}; //seven nation army
 int currentNote = notes[0];
 
 QuickStats stats;
@@ -76,10 +79,15 @@ int encoderToNote(int encoderVal){
 //  Serial.println(octaveAddition);
 //  return notes[noteIndex % numNotes] + octaveAddition;
 
-  //alernative - just map directly to midi notes
-
-  int bassNote = 24; //middle c?
-  return encoderVal / ticksPerNote + bassNote;
+//  //alernative - just map directly to midi notes
+////  int bassNote = 24; //middle c?
+//  int bassNote = 74; //for power chord sf2 (uses range 65-86)
+//  return encoderVal / ticksPerNote + bassNote;
+  
+  //alernative - loop through notes in a song, ignoring encoder
+  int bassNote = 74; //for power chord sf2 (uses range 65-86)
+  noteIndex = (noteIndex + 1) % numNotes;
+  return bassNote + notes[noteIndex];
 }
 
 
