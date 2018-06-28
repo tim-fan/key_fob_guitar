@@ -21,9 +21,17 @@ int encoderCorrection = 0; //used to keep encoder values positive
 
 //int numNotes = 7;
 //int notes[] = {24, 26, 28, 29, 31, 33, 35}; //midi codes for c major scale
-int numNotes = 39;
 int noteIndex = 0;
-int notes[] = {7,7,10,7,5,3,2,7,7,10,7,5,3,5,3,2,7,7,10,7,5,3,2,-2,-2,-2,-2,-2,-2,-2,-2,0,0,0,0,0,0,0,0}; //seven nation army
+////seven nation army
+//int bassNote = 74;
+//int numNotes = 39;
+//int notes[] = {7,7,10,7,5,3,2,7,7,10,7,5,3,5,3,2,7,7,10,7,5,3,2,-2,-2,-2,-2,-2,-2,-2,-2,0,0,0,0,0,0,0,0}; 
+
+//smoke on the water
+int bassNote = 69; //for power chord sf2 (uses range 65-86)
+int numNotes = 32;
+int notes[] = {10,13,15,10,13,16,15,10,13,15,13,10,10,13,15,10,13,16,15,10,13,15,13,10,8,8,8,8,4,4,4,4}; 
+
 int currentNote = notes[0];
 
 QuickStats stats;
@@ -85,7 +93,7 @@ int encoderToNote(int encoderVal){
 //  return encoderVal / ticksPerNote + bassNote;
   
   //alernative - loop through notes in a song, ignoring encoder
-  int bassNote = 74; //for power chord sf2 (uses range 65-86)
+  
   noteIndex = (noteIndex + 1) % numNotes;
   return bassNote + notes[noteIndex];
 }
