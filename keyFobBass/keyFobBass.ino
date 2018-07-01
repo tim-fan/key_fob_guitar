@@ -12,15 +12,26 @@ volatile float pluckSensorVals[pluckSensorBufferSize];
 volatile int pluckSensorIndex = pluckSensorBufferSize;
 const float pluckSensorLoudnessThreshold = 50;
 unsigned long lastPluckTime = 0;
-const int pluckDebounceTime = 50; //milliseconds
+const int pluckDebounceTime = 100; //milliseconds
 bool lastPluckState = false; //for rising edge detection
 
 
 Encoder posEncoder(5, 6);
 int encoderCorrection = 0; //used to keep encoder values positive
 
-int numNotes = 7;
-int notes[] = {24, 26, 28, 29, 31, 33, 35}; //midi codes for c major scale
+//int numNotes = 7;
+//int notes[] = {24, 26, 28, 29, 31, 33, 35}; //midi codes for c major scale
+int noteIndex = 0;
+////seven nation army
+//int bassNote = 74;
+//int numNotes = 39;
+//int notes[] = {7,7,10,7,5,3,2,7,7,10,7,5,3,5,3,2,7,7,10,7,5,3,2,-2,-2,-2,-2,-2,-2,-2,-2,0,0,0,0,0,0,0,0}; 
+
+//smoke on the water
+int bassNote = 69; //for power chord sf2 (uses range 65-86)
+int numNotes = 32;
+int notes[] = {10,13,15,10,13,16,15,10,13,15,13,10,10,13,15,10,13,16,15,10,13,15,13,10,8,8,8,8,4,4,4,4}; 
+
 int currentNote = notes[0];
 
 QuickStats stats;
@@ -76,10 +87,15 @@ int encoderToNote(int encoderVal){
 //  Serial.println(octaveAddition);
 //  return notes[noteIndex % numNotes] + octaveAddition;
 
-  //alernative - just map directly to midi notes
-
-  int bassNote = 24; //middle c?
-  return encoderVal / ticksPerNote + bassNote;
+//  //alernative - just map directly to midi notes
+////  int bassNote = 24; //middle c?
+//  int bassNote = 74; //for power chord sf2 (uses range 65-86)
+//  return encoderVal / ticksPerNote + bassNote;
+  
+  //alernative - loop through notes in a song, ignoring encoder
+  
+  noteIndex = (noteIndex + 1) % numNotes;
+  return bassNote + notes[noteIndex];
 }
 
 
